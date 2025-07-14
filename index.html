@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        alert("Welcome to Rock Paper Scissors!");
+        play();
+        function play()
+        {
+            let pwins = 0;
+            let cwins = 0;
+            for(let i = 0; i < 5; i++)
+            {
+                let playerChoice = humanChoice();
+                let cchoice = computerChoice();
+                console.log(cchoice);
+                if(playerChoice === "rock" && cchoice === "rock" || playerChoice === "paper" && cchoice === "paper" || playerChoice === "scissors" && cchoice === "scissors")
+                {
+                    alert("Computer choose " + cchoice + " it's a tie!");
+                }
+                if(playerChoice === "rock" && cchoice === "scissors" || playerChoice === "paper" && cchoice === "rock" || playerChoice === "scissors" && cchoice === "paper")
+                {
+                    alert("Computer choose " + cchoice + " you win!!");
+                    pwins++;
+                }
+                if(playerChoice === "rock" && cchoice === "paper" || playerChoice === "paper" && cchoice === "scissors" || playerChoice === "scissors" && cchoice === "rock")
+                {
+                    alert("Computer choose " + cchoice + " you lose :(");
+                    cwins++;
+                }
+            }
+            if(pwins > cwins)
+            {
+                alert("You won the game with " + pwins + " points!");
+                play();
+            }
+            else if(cwins > pwins)
+            {
+                alert("Computer won with " + cwins + " points");
+                play();
+            }
+            else
+            {
+                alert("No one wins");
+                play();
+            }
+        }
+
+        function humanChoice()
+        {
+            let choice = true;
+            while(choice)
+            {   
+                let currentchoice = prompt("choose your fighter: ");
+                if(currentchoice.toLowerCase() === "rock" || currentchoice.toLowerCase() === "scissors" || currentchoice.toLowerCase() === "paper")
+                {
+                    return(currentchoice);
+                    choice = false;
+                }
+                else
+                {
+                    alert("That was not a proper choice");
+                }
+            }
+        }
+
+        function computerChoice()
+        {
+            let num = Math.floor(Math.random() * 3) + 1
+            if(num === 1)
+            {
+                return "rock";
+            }
+            else if(num === 2)
+            {
+                return "scissors";
+            }
+            else if(num === 3)
+            {
+                return "paper";
+            }
+        }
+    </script>
+</body>
+</html>
