@@ -6,67 +6,32 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="buttons">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <div id="notifs"></div>
+    <div id="winNotif"></div>
+
     <script>
         alert("Welcome to Rock Paper Scissors!");
-        play();
-        function play()
-        {
-            let pwins = 0;
-            let cwins = 0;
-            for(let i = 0; i < 5; i++)
-            {
-                let playerChoice = humanChoice();
-                let cchoice = computerChoice();
-                console.log(cchoice);
-                if(playerChoice === "rock" && cchoice === "rock" || playerChoice === "paper" && cchoice === "paper" || playerChoice === "scissors" && cchoice === "scissors")
-                {
-                    alert("Computer choose " + cchoice + " it's a tie!");
-                }
-                if(playerChoice === "rock" && cchoice === "scissors" || playerChoice === "paper" && cchoice === "rock" || playerChoice === "scissors" && cchoice === "paper")
-                {
-                    alert("Computer choose " + cchoice + " you win!!");
-                    pwins++;
-                }
-                if(playerChoice === "rock" && cchoice === "paper" || playerChoice === "paper" && cchoice === "scissors" || playerChoice === "scissors" && cchoice === "rock")
-                {
-                    alert("Computer choose " + cchoice + " you lose :(");
-                    cwins++;
-                }
-            }
-            if(pwins > cwins)
-            {
-                alert("You won the game with " + pwins + " points!");
-                play();
-            }
-            else if(cwins > pwins)
-            {
-                alert("Computer won with " + cwins + " points");
-                play();
-            }
-            else
-            {
-                alert("No one wins");
-                play();
-            }
-        }
+        let roundsPlayed = 0;
+        let winNotif = document.querySelector("#winNotif");
+        let cwins = 0;
+        let pwins = 0;
 
-        function humanChoice()
-        {
-            let choice = true;
-            while(choice)
-            {   
-                let currentchoice = prompt("choose your fighter: ");
-                if(currentchoice.toLowerCase() === "rock" || currentchoice.toLowerCase() === "scissors" || currentchoice.toLowerCase() === "paper")
-                {
-                    return(currentchoice);
-                    choice = false;
-                }
-                else
-                {
-                    alert("That was not a proper choice");
-                }
+        const buttons = document.querySelector("#buttons");
+        buttons.addEventListener('click', (event) => {
+            if(roundsPlayed === 0)
+            {
+                winNotif.textContent = '';
+                pwins = 0;
+                cwins = 0;
             }
-        }
+            let target = event.target;
+            playround(target.id.toString());
+        });
 
         function computerChoice()
         {
@@ -82,6 +47,45 @@
             else if(num === 3)
             {
                 return "paper";
+            }
+        }
+
+        function playround(playerChoice)
+        {
+            let notifs = document.querySelector("#notifs");
+            let cchoice = computerChoice();
+            roundsPlayed++;
+
+            if(playerChoice === "rock" && cchoice === "rock" || playerChoice === "paper" && cchoice === "paper" || playerChoice === "scissors" && cchoice === "scissors")
+            {
+                notifs.textContent = ("Computer choose " + cchoice + " it's a tie!");
+            }
+            if(playerChoice === "rock" && cchoice === "scissors" || playerChoice === "paper" && cchoice === "rock" || playerChoice === "scissors" && cchoice === "paper")
+            {
+                notifs.textContent = ("Computer choose " + cchoice + " you win!!");
+                pwins++;
+            }
+            if(playerChoice === "rock" && cchoice === "paper" || playerChoice === "paper" && cchoice === "scissors" || playerChoice === "scissors" && cchoice === "rock")
+            {
+                notifs.textContent = ("Computer choose " + cchoice + " you lose :(");
+                cwins++;
+            }
+
+            if(roundsPlayed === 5)
+            {
+                if(pwins > cwins)
+                {
+                    winNotif.textContent = ("You won the game with " + pwins + " points! Choose to play again");
+                }
+                else if(cwins > pwins)
+                {
+                    winNotif.textContent = ("Computer won with " + cwins + " points. Choose to play again");
+                }
+                else
+                {
+                    winNotif.textContent = ("No one wins. Choose to play again");
+                }
+                roundsPlayed = 0;
             }
         }
     </script>
